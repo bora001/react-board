@@ -1,7 +1,7 @@
 import React from "react";
 import TodoCard from "../component/TodoCard";
 
-function TodoBoard() {
+function TodoBoard(props: { title: string; color: string }) {
   return (
     <div
       style={{
@@ -14,12 +14,12 @@ function TodoBoard() {
       <p
         style={{
           textAlign: "center",
-          backgroundColor: "#CEF6D8",
+          backgroundColor: props.color,
           padding: "10px 0",
           fontWeight: "700",
         }}
       >
-        Today's Todo
+        {props.title}
       </p>
       <TodoCard />
     </div>
