@@ -1,6 +1,6 @@
-import React from "react";
+import React, { ReactElement } from "react";
 
-function Modal(children: JSX.Element) {
+function Modal(props: { children: JSX.Element }) {
   return (
     <div
       style={{
@@ -17,7 +17,7 @@ function Modal(children: JSX.Element) {
         overflow: "hidden",
       }}
     >
-      {children}
+      {props.children}
     </div>
   );
 }

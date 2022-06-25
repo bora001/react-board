@@ -1,7 +1,8 @@
 import React from "react";
 import "./App.css";
+import TodoForm from "./component/TodoForm";
 import TodoBoard from "./Todo-Board/TodoBoard";
-
+import Modal from "./UI/Modal";
 function App() {
   return (
     <div
@@ -34,6 +35,9 @@ function App() {
       >
         Create New Todo
       </button>
+      <Modal>
+        <TodoForm />
+      </Modal>
     </div>
   );
 }
