@@ -1,5 +1,3 @@
-import React, { ReactElement } from "react";
-
 function Modal(props: { children: JSX.Element }) {
   return (
     <div

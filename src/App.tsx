@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import TodoForm from "./component/TodoForm";
 import TodoBoard from "./Todo-Board/TodoBoard";
 import Modal from "./UI/Modal";
 function App() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <div
       className="App"
@@ -32,12 +34,16 @@ function App() {
           margin: "10px auto",
           cursor: "pointer",
         }}
+        onClick={() => setModalOpen(true)}
       >
         Create New Todo
       </button>
-      <Modal>
-        <TodoForm />
-      </Modal>
+
+      {modalOpen && (
+        <Modal>
+          <TodoForm modalClose={() => setModalOpen(false)} />
+        </Modal>
+      )}
     </div>
   );
 }
