@@ -1,5 +1,6 @@
-import { useForm } from "react-hook-form";
-
+import { FieldValue, SubmitHandler, useForm } from "react-hook-form";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { todoList, TodoType } from "../store/store";
 type todoFormType = {
   modalClose: () => void;
 };
@@ -8,12 +9,24 @@ function TodoForm({ modalClose }: todoFormType) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const onSubmit = (data: any) => console.log(data);
+  } = useForm<TodoType>();
+
+  const todolist = useRecoilValue<TodoType[]>(todoList);
+  const setTodo = useSetRecoilState<TodoType[]>(todoList);
+
+  console.log(todolist);
+  const onSubmit = handleSubmit((data) => {
+    console.log(todolist.length);
+    console.log(data);
+    data.id = todolist.length;
+    setTodo([...todolist, data]);
+  });
+
+  handleSubmit;
   return (
     <div style={{ padding: "15px", backgroundColor: "#fff" }}>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={onSubmit}
         style={{ display: "flex", flexDirection: "column" }}
       >
         <label htmlFor="title">Title</label>
@@ -23,8 +36,8 @@ function TodoForm({ modalClose }: todoFormType) {
         <input id="desc" {...register("desc", { required: true })} />
         {errors.desc && <p>Description is required.</p>}
         <label htmlFor="period">Period</label>
-        <select id="period">
-          <option value="today">Today</option>
+        <select id="period" {...register("period", { required: true })}>
+          ,<option value="today">Today</option>
           <option value="week">This Week</option>
           <option value="month">This Month</option>
           <option value="year">This Year</option>
