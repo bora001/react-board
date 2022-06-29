@@ -24,10 +24,10 @@ function App() {
           border: "1px solid #32D475",
         }}
       >
-        <TodoBoard title="Today's Todo" color="#CEF6D8" />
-        <TodoBoard title="This Week's Todo" color="#abe4b9" />
-        <TodoBoard title="This Month's Todo" color="#8cdca0" />
-        <TodoBoard title="This Year's Todo" color="#4fc86d" />
+        <TodoBoard option="today" title="Today's Todo" color="#CEF6D8" />
+        <TodoBoard option="week" title="This Week's Todo" color="#abe4b9" />
+        <TodoBoard option="month" title="This Month's Todo" color="#8cdca0" />
+        <TodoBoard option="year" title="This Year's Todo" color="#4fc86d" />
       </div>
       <button
         style={{

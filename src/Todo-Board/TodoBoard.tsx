@@ -1,14 +1,17 @@
 import React from "react";
+import { useRecoilValue } from "recoil";
 import TodoCard from "../component/TodoCard";
+import { TodoType, todoList } from "../store/store";
 
-function TodoBoard(props: { title: string; color: string }) {
+function TodoBoard(props: { title: string; option: string; color: string }) {
+  const todolist = useRecoilValue<TodoType[]>(todoList);
+  const list = todolist.filter((x) => x.period == props.option);
   return (
     <div
       style={{
         width: "350px",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
       }}
     >
       <p
@@ -21,7 +24,7 @@ function TodoBoard(props: { title: string; color: string }) {
       >
         {props.title}
       </p>
-      <TodoCard />
+      <TodoCard list={list} />
     </div>
   );
 }

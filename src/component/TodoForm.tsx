@@ -1,5 +1,5 @@
-import { FieldValue, SubmitHandler, useForm } from "react-hook-form";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useForm } from "react-hook-form";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { todoList, TodoType } from "../store/store";
 type todoFormType = {
   modalClose: () => void;
@@ -14,10 +14,7 @@ function TodoForm({ modalClose }: todoFormType) {
   const todolist = useRecoilValue<TodoType[]>(todoList);
   const setTodo = useSetRecoilState<TodoType[]>(todoList);
 
-  console.log(todolist);
   const onSubmit = handleSubmit((data) => {
-    console.log(todolist.length);
-    console.log(data);
     data.id = todolist.length;
     setTodo([...todolist, data]);
   });
