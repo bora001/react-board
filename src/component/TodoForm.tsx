@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { todoList, TodoType } from "../store/store";
+import { notification } from "antd";
 
 type todoFormType = {
   modalClose: () => void;
@@ -16,10 +17,18 @@ function TodoForm({ modalClose }: todoFormType) {
   const todolist = useRecoilValue<TodoType[]>(todoList);
   const setTodo = useSetRecoilState<TodoType[]>(todoList);
 
+  const resultMsg = () => {
+    notification.success({
+      message: `New Todo updated! `,
+      placement: "top",
+    });
+  };
+
   const onSubmit = handleSubmit((data) => {
     data.id = todolist.length;
     setTodo([...todolist, data]);
-    reset();
+    modalClose();
+    resultMsg();
   });
 
   return (
