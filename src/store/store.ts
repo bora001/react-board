@@ -20,3 +20,8 @@ export const todoList = atom<TodoType[]>({
     { id: 7, title: "title1", desc: "desc1", period: "month" },
   ],
 });
+
+export const dragItem = atom<TodoType>({
+  key: "dragItem",
+  default: { id: 0, title: "", desc: "", period: "" },
+});
