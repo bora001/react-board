@@ -8,14 +8,18 @@ import {
 import "antd/dist/antd.css";
 import { StyledCard } from "../style/style";
 import { Avatar, Card } from "antd";
-import { dragItem, TodoType } from "../store/store";
+import { dragItem, TodoType, todoList } from "../store/store";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { notification } from "antd";
 import { useState } from "react";
 const { Meta } = Card;
 function TodoCard(props: { list: TodoType[] }) {
   const [showMenu, setShowMenu] = useState<number | null>();
   const setDragged = useSetRecoilState<TodoType>(dragItem);
   const draglist = useRecoilValue(dragItem);
+  const todolist = useRecoilValue<TodoType[]>(todoList);
+  const setTodo = useSetRecoilState<TodoType[]>(todoList);
+
   const dragStartHandler = (id: any) => {
     setDragged(id);
   };
@@ -23,7 +27,12 @@ function TodoCard(props: { list: TodoType[] }) {
     console.log("editt");
   };
   const deleteCard = (id: number) => {
-    console.log("delete");
+    const newTodo = todolist.filter((card) => card.id != id);
+    setTodo(newTodo);
+    notification.success({
+      message: `Selected Todo deleted `,
+      placement: "top",
+    });
   };
 
   return (
