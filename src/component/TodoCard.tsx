@@ -11,20 +11,41 @@ import { Avatar, Card } from "antd";
 import { dragItem, TodoType, todoList } from "../store/store";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { notification } from "antd";
-import { useState } from "react";
+import { useState, useRef } from "react";
 const { Meta } = Card;
 function TodoCard(props: { list: TodoType[] }) {
   const [showMenu, setShowMenu] = useState<number | null>();
+  const [editStatus, setEditStatus] = useState<number | null>();
   const setDragged = useSetRecoilState<TodoType>(dragItem);
   const draglist = useRecoilValue(dragItem);
   const todolist = useRecoilValue<TodoType[]>(todoList);
   const setTodo = useSetRecoilState<TodoType[]>(todoList);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descRef = useRef<HTMLInputElement>(null);
 
   const dragStartHandler = (id: any) => {
     setDragged(id);
   };
+
   const editCard = (id: number) => {
-    console.log("editt");
+    if (id == editStatus) {
+      const title = titleRef.current!.value;
+      const desc = descRef.current!.value;
+      const newTodo = todolist.map((card) =>
+        card.id == id ? { ...card, title, desc } : card
+      );
+
+      setTodo(newTodo);
+      notification.success({
+        message: `Todo text is changed! `,
+        placement: "top",
+      });
+      setEditStatus(() => null);
+      setShowMenu(() => null);
+
+      return;
+    }
+    setEditStatus(() => id);
   };
   const deleteCard = (id: number) => {
     const newTodo = todolist.filter((card) => card.id != id);
@@ -33,6 +54,11 @@ function TodoCard(props: { list: TodoType[] }) {
       message: `Selected Todo deleted `,
       placement: "top",
     });
+  };
+
+  const closeCard = () => {
+    setShowMenu(null);
+    setEditStatus(null);
   };
 
   return (
@@ -48,10 +74,7 @@ function TodoCard(props: { list: TodoType[] }) {
                     key="delete"
                     onClick={() => deleteCard(item.id)}
                   />,
-                  <CloseOutlined
-                    key="close"
-                    onClick={() => setShowMenu(null)}
-                  />,
+                  <CloseOutlined key="close" onClick={closeCard} />,
                 ]
               : []
           }
@@ -70,11 +93,33 @@ function TodoCard(props: { list: TodoType[] }) {
               }}
             />
           )}
-          <Meta
-            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-            title={item.title}
-            description={item.desc}
-          />
+          {item.id == editStatus ? (
+            <Meta
+              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+              title={
+                <input
+                  ref={titleRef}
+                  placeholder="title"
+                  style={{ textIndent: "5px", width: "100%" }}
+                  required
+                />
+              }
+              description={
+                <input
+                  ref={descRef}
+                  placeholder="description"
+                  style={{ textIndent: "5px", width: "100%" }}
+                  required
+                />
+              }
+            />
+          ) : (
+            <Meta
+              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+              title={item.title}
+              description={item.desc}
+            />
+          )}
         </StyledCard>
       ))}
     </>
