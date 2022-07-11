@@ -27,10 +27,14 @@ function TodoCard(props: { list: TodoType[] }) {
     setDragged(id);
   };
 
-  const editCard = (id: number) => {
-    if (id == editStatus) {
-      const title = titleRef.current!.value;
-      const desc = descRef.current!.value;
+  const rewriteCard = (id: number) => {
+    const title = titleRef.current!.value;
+    const desc = descRef.current!.value;
+
+    if (!title || !desc) {
+      alert("Please, Enter valid value!");
+      return;
+    } else {
       const newTodo = todolist.map((card) =>
         card.id == id ? { ...card, title, desc } : card
       );
@@ -40,13 +44,19 @@ function TodoCard(props: { list: TodoType[] }) {
         message: `Todo text is changed! `,
         placement: "top",
       });
-      setEditStatus(() => null);
-      setShowMenu(() => null);
+    }
+    setEditStatus(() => null);
+    setShowMenu(() => null);
+  };
 
+  const editCard = (id: number) => {
+    if (id == editStatus) {
+      rewriteCard(id);
       return;
     }
     setEditStatus(() => id);
   };
+
   const deleteCard = (id: number) => {
     const newTodo = todolist.filter((card) => card.id != id);
     setTodo(newTodo);
