@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./App.css";
 import TodoForm from "./component/TodoForm";
+import { StyledButton } from "./style/style";
 import TodoBoard from "./Todo-Board/TodoBoard";
 import Modal from "./UI/Modal";
+
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -29,15 +31,9 @@ function App() {
         <TodoBoard option="month" title="This Month's Todo" color="#8cdca0" />
         <TodoBoard option="year" title="This Year's Todo" color="#4fc86d" />
       </div>
-      <button
-        style={{
-          margin: "10px auto",
-          cursor: "pointer",
-        }}
-        onClick={() => setModalOpen(true)}
-      >
+      <StyledButton onClick={() => setModalOpen(true)}>
         Create New Todo
-      </button>
+      </StyledButton>
 
       {modalOpen && (
         <Modal>

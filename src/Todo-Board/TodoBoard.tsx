@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import TodoCard from "../component/TodoCard";
 import { TodoType, todoList, dragItem } from "../store/store";
 

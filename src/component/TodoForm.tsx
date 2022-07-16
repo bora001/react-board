@@ -2,7 +2,14 @@ import { useForm } from "react-hook-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { todoList, TodoType } from "../store/store";
 import { notification } from "antd";
-
+import {
+  StyledButton,
+  StyledCloseButton,
+  StyledForm,
+  StyledInput,
+  StyledModalCnt,
+} from "../style/style";
+import { CloseOutlined } from "@ant-design/icons";
 type todoFormType = {
   modalClose: () => void;
 };
@@ -32,17 +39,14 @@ function TodoForm({ modalClose }: todoFormType) {
   });
 
   return (
-    <div style={{ padding: "15px", backgroundColor: "#fff" }}>
-      <form
-        onSubmit={onSubmit}
-        style={{ display: "flex", flexDirection: "column" }}
-      >
+    <StyledModalCnt>
+      <StyledForm onSubmit={onSubmit}>
         <label htmlFor="title">Title</label>
         <input id="title" {...register("title", { required: true })} />
-        {errors.title && <p>title is required.</p>}
+        {errors.title && <p>* Title is required.</p>}
         <label htmlFor="desc">Description</label>
         <input id="desc" {...register("desc", { required: true })} />
-        {errors.desc && <p>Description is required.</p>}
+        {errors.desc && <p>* Description is required.</p>}
         <label htmlFor="period">Period</label>
         <select id="period" {...register("period", { required: true })}>
           ,<option value="today">Today</option>
@@ -50,12 +54,12 @@ function TodoForm({ modalClose }: todoFormType) {
           <option value="month">This Month</option>
           <option value="year">This Year</option>
         </select>
-        <input type="submit" />
-      </form>
-      <button style={{ cursor: "pointer " }} onClick={modalClose}>
-        close
-      </button>
-    </div>
+        <StyledButton type="submit">Submit</StyledButton>
+      </StyledForm>
+      <StyledCloseButton onClick={modalClose}>
+        <CloseOutlined />
+      </StyledCloseButton>
+    </StyledModalCnt>
   );
 }
 

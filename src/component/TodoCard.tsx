@@ -3,7 +3,6 @@ import {
   DeleteOutlined,
   MoreOutlined,
   CloseOutlined,
-  MenuOutlined,
 } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { StyledCard } from "../style/style";
