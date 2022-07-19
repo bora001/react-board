@@ -9,8 +9,6 @@ function TodoBoard(props: { title: string; option: string; color: string }) {
   const list = todolist.filter((x) => x.period == props.option);
   const setTodo = useSetRecoilState<TodoType[]>(todoList);
 
-  useEffect(() => {}, [list]);
-  console.log(props.option, "propss-today");
   const dropHandler = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const newTodo = todolist.map((y) =>
