@@ -34,6 +34,7 @@ function TodoBoard(props: { title: string; option: string; color: string }) {
         style={{
           textAlign: "center",
           backgroundColor: props.color,
+          margin: 0,
           padding: "10px 0",
           fontWeight: "700",
         }}
